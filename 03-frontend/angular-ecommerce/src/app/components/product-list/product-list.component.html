@@ -1,0 +1,60 @@
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-md-3" *ngFor="let p of products">
+                    <div class="product-box" >
+                        <a [routerLink]="['/products', p.id]">
+                            <img src="{{p.imageUrl}}" class="img-responsive">
+                        </a>
+                        <a [routerLink]="['/products', p.id]">
+                            <h1>{{p.name}}</h1>
+                        </a>
+                        <h2>{{p.description}}</h2>
+                        <div class="price">{{p.unitPrice | currency: 'USD'}}</div>
+                        <button (click)="addToCart(p)" class="btn btn-primary">Add to cart</button>
+                    </div>   
+                </div>
+                <div *ngIf="this.products?.length===0">
+                    <div role="alert" class="alert alert-warning col-md-12">No products found.</div>
+                </div>
+            </div>
+
+            <div class="footer-pagination">
+                <div class="row">
+                    <div class="col-md-6"></div>
+                   
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-7 mb-2" >
+                                <ngb-pagination [(page)]="pageNumber"
+                                                [pageSize]="pageSize"
+                                                [collectionSize]="totalElements"
+                                                [maxSize]="5"
+                                                [boundaryLinks]="true"
+                                                (pageChange)="fetchProductList()"
+                                ></ngb-pagination>
+                                <!--[maxSize] sets the maximum amount of page lnks before ... -->
+                                <!--[boundaryLinks gives us links to the first and last page at the edges] -->
+
+                            </div>
+
+                            <div class="col-md-5 mt-2" style="text-align: right">
+                                <div>
+                                    <span clas="mr-2">Page Size</span>
+                                    <select #pageSizeSelect (change)="updatePageSize(pageSizeSelect.value)">
+                                        <option selected value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
